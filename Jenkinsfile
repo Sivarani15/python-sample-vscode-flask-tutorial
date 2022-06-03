@@ -21,9 +21,14 @@ pipeline {
                 sh 'pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml'
             }
         }
-        stage('Archiving test results') {
+        stage('Test results') {
             steps {
                 junit testResults: '**/tets-*.xml'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'python3 -m build'
             }
         }
     } 
