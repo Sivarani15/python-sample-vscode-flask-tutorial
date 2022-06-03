@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Cloning source code') {
             steps {
-                git branch: 'declarative', url: 'https://github.com/Sivarani15/the-example-app.nodejs.git'
+                git branch: 'declarative', url: 'https://github.com/Sivarani15/python-sample-vscode-flask-tutorial.git'
             }
         }
         stage('Build') {
