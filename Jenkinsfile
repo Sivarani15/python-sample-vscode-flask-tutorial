@@ -18,12 +18,12 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml'
+                sh 'python3 -m pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml'
             }
         }
         stage('Test results') {
             steps {
-                junit testResults: '**/tets-*.xml'
+                junit testResults: '**/test-*.xml'
             }
         }
         stage('Build') {
@@ -31,5 +31,16 @@ pipeline {
                 sh 'python3 -m build'
             }
         }
+        stage('SonarQube Analysis') {
+            def scannerHome = tool 'SonarScanner';
+            withSonarQubeEnv() {
+                sh "${scannerHome}/bin/sonar-scanner"
+            }
+        }
+        // stage('Artifactory configuration') {
+        //     steps {
+        //         rtPipInstall
+        //     }
+        // }
     } 
 }
